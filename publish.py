@@ -139,7 +139,7 @@ def generate_cdn_list():
             f.write(cdn_path)
 
 if __name__ == '__main__':
-    os.chdir("C:\Workspace\update_20180723_qipai")
+    os.chdir("C:\Workspace\pubToLine")
     pathSVN = os.path.join(os.getcwd(),"dev")
     svnVerA = svnGetCurVersion(pathSVN)
     svnUp(pathSVN)
