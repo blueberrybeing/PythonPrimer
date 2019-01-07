@@ -16,25 +16,37 @@ outpath = ""
 Path = ""
 
 names = {
-    # 'hall':'_17_1.zip',
-    # 'common':'_18_0.zip',
+    'hall':'_19_0.zip',
+    'common':'_19_0.zip',
 
-    # 'bcbm':'_17_0.zip',
-    # 'fkszg':'_17_0.zip',
-    # 'fruit':'_17_0.zip',
-    # 'hhmf':'_17_0.zip',
-    # 'jlbd':'_17_0.zip',
-    # 'phoenix':'_17_0.zip',
-    # 'shz':'_17_0.zip',
-    # 'slwh':'_17_0.zip',
-    # 'slwh3D':'_17_0.zip',
-    # 'xyzb':'_17_0.zip',
+    # 'festivity':'_18_4.zip',
+    'spring_guide':'_19_0.zip',
+    'spring_festival':'_19_0.zip',
 
-    # 'fkjh':'_17_0.zip',
-    # 'brnn':'_17_0.zip',
-    # 'ddz':'_17_0.zip',
-    # 'xydz':'_17_0.zip',
-    'sgzb':'_17_0.zip',
+    'common_jj':'_18_2.zip',
+    'bcbm':'_19_0.zip',
+    'fkszg':'_18_1.zip',
+    'fruit':'_18_1.zip',
+    'hhmf':'_18_1.zip',
+    'jlbd':'_18_2.zip',
+    'phoenix':'_18_2.zip',
+    'shz':'_19_0.zip',
+    'slwh':'_18_2.zip',
+    'slwh3D':'_18_3.zip',
+    'xyzb':'_18_3.zip',
+    # 'fkzww':'_18_0.zip',
+
+    'common_qp':'_18_1.zip',
+    'fkjh':'_18_2.zip',
+    'brnn':'_18_2.zip',
+    'ddz':'_19_0.zip',
+    'xydz':'_18_2.zip',
+    'sgzb':'_18_3.zip',
+
+    'common_by':'_19_0.zip',
+    'shby':'_18_2.zip',
+    'fishing':'_18_2.zip',
+    # 'fkby':'_17_1.zip',
 }
 
 def svnGetCurVersion(path):
@@ -62,7 +74,7 @@ def generate_pub():
         if tempvalue != -1:
             temp_child_dir = os.path.join(mypath, tempfile)
             print(os.path.join(outpath, tempfile),temp_child_dir)
-            if tempvalue == '_18_0.zip' or tempvalue == '_17_0.zip':
+            if tempvalue == '_19_0.zip':
                 shutil.copytree(os.path.join(pathSVN, tempfile),temp_child_dir)
             else:
                 shutil.copytree(os.path.join(outpath, tempfile),temp_child_dir)
@@ -139,7 +151,7 @@ def generate_cdn_list():
             f.write(cdn_path)
 
 if __name__ == '__main__':
-    os.chdir("C:\Workspace\pubToLine")
+    os.chdir("C:\Workspace\pub_formal")
     pathSVN = os.path.join(os.getcwd(),"dev")
     svnVerA = svnGetCurVersion(pathSVN)
     svnUp(pathSVN)

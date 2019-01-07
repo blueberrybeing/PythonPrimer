@@ -6,33 +6,40 @@ import os
 import requests
 
 names = {
-    # 'hall':'_17_1.zip',
-    # 'common':'_18_0.zip',
+    'hall':'_18_5.zip',
+    'common':'_18_6.zip',
+    
+    'festivity':'_18_4.zip',
 
-    # 'bcbm':'_17_0.zip',
-    # 'fkszg':'_17_0.zip',
-    # 'fruit':'_17_0.zip',
-    # 'hhmf':'_17_0.zip',
-    # 'jlbd':'_17_0.zip',
-    # 'phoenix':'_17_0.zip',
-    # 'shz':'_17_0.zip',
-    # 'slwh':'_17_0.zip',
-    # 'slwh3D':'_17_0.zip',
-    # 'xyzb':'_17_0.zip',
+    # 'common_jj':'_18_1.zip',
+    # 'bcbm':'_18_0.zip',
+    # 'fkszg':'_18_0.zip',
+    # 'fruit':'_18_0.zip',
+    # 'hhmf':'_18_0.zip',
+    # 'jlbd':'_18_1.zip',
+    # 'phoenix':'_18_1.zip',
+    # 'shz':'_18_0.zip',
+    # 'slwh':'_18_1.zip',
+    # 'slwh3D':'_18_2.zip',
+    'xyzb':'_18_2.zip',
+    # 'fkzww':'_18_0.zip',
 
-    # 'fkjh':'_17_0.zip',
-    # 'brnn':'_17_0.zip',
-    # 'ddz':'_17_0.zip',
-    # 'xydz':'_17_0.zip',
-    'sgzb':'_17_1.zip',
+    # 'common_qp':'_18_0.zip',
+    # 'fkjh':'_18_1.zip',
+    # 'brnn':'_18_1.zip',
+    # 'ddz':'_18_1.zip',
+    # 'xydz':'_18_1.zip',
+    # 'sgzb':'_18_2.zip',
 
-    # 'fkby':'_17_0.zip',
-    'classic':'_2_1.zip',
-    'djs':'_2_1.zip',
-    'lwmj':'_2_1.zip',
-    'monkey':'_2_1.zip',
-    # 'public':'_2_0.zip',
-    'sgdk':'_2_1.zip',
+    # 'shby':'_18_1.zip',
+    # 'fishing':'_18_1.zip',
+    # 'fkby':'_18_1.zip',
+    # 'classic':'_3_1.zip',
+    # 'djs':'_3_0.zip',
+    # 'lwmj':'_3_0.zip',
+    # 'monkey':'_3_0.zip',
+    # 'public':'_3_0.zip',
+    # 'sgdk':'_3_0.zip',
 }
 
 def cp_pre_zips(mypath):
@@ -61,7 +68,7 @@ def generate_cdn_list(mypath):
             f.write(cdn_path)
 
 if __name__ == '__main__':
-    os.chdir("C:\Workspace\pubToLine")
+    os.chdir("C:\Workspace\pub_formal")
     mypath = os.path.join(os.getcwd(),"formal")
 
     cp_pre_zips(mypath)
