@@ -14,6 +14,7 @@ svnVerB = ""
 mypath = ""
 outpath = ""
 Path = ""
+majorVer = "_19_0.zip"
 
 names = {
     'hall':'_19_4.zip',
@@ -53,6 +54,8 @@ names = {
     # 'fkby':'_19_0.zip',
 }
 
+skins = ["skins_12489"]
+
 def svnGetCurVersion(path):
   return pysvn.Client().info(path).commit_revision.number
 
@@ -78,7 +81,8 @@ def generate_pub():
         if tempvalue != -1:
             temp_child_dir = os.path.join(mypath, tempfile)
             print(os.path.join(outpath, tempfile),temp_child_dir)
-            if tempvalue == '_19_0.zip':
+            
+            if tempvalue == majorVer:
                 shutil.copytree(os.path.join(pathSVN, tempfile),temp_child_dir)
             else:
                 shutil.copytree(os.path.join(outpath, tempfile),temp_child_dir)
@@ -103,6 +107,61 @@ def generate_pub():
                 print("===========version.json file is not exist=========")
                 return True
 
+#shutil.copytree dst_path目录已经存在时拷贝会报错
+def my_copy_tree(src_path, dst_path):
+    if not os.path.exists(dst_path):
+        os.makedirs(dst_path)
+
+    if os.path.exists(src_path):        
+        for node_name in os.listdir(src_path):
+            full_path = os.path.join(src_path, node_name)
+            if os.path.isfile(full_path):
+                shutil.copy(full_path, os.path.join(dst_path, node_name))
+            else:
+                my_copy_tree(full_path, os.path.join(dst_path, node_name))
+    else:
+        print(src_path+" is not exist!")
+
+#生成皮的pub下对应文件夹，且该方法必须在generate_pub后调用
+#以确保主线的更改以拷到pub，方便之后的皮的覆盖
+def generate_pub_skin():
+    for tmpskin in os.listdir(outpath):
+        if tmpskin in skins :
+            print("skin_dir:"+tmpskin) 
+            for tempfile in os.listdir(os.path.join(outpath,tmpskin)):
+                tempvalue = names.get(tempfile, -1)
+                if tempvalue != -1:
+                    skin_channel = tmpskin.replace("skins", "")
+                    temp_main_child_dir = os.path.join(mypath, tempfile)
+                    temp_child_dir = os.path.join(os.path.join(mypath, tmpskin), tempfile)#os.path.join(mypath, tempfile+skin_channel)
+                    my_copy_tree(temp_main_child_dir, temp_child_dir)
+                    print(os.path.join(outpath, tempfile),temp_child_dir)
+                    
+                    if tempvalue == majorVer:
+                        my_copy_tree(os.path.join(os.path.join(pathSVN, tmpskin),tempfile),temp_child_dir)
+                    else:
+                        my_copy_tree(os.path.join(os.path.join(outpath, tmpskin),tempfile),temp_child_dir)
+
+                    temp_version_file = os.path.join(temp_child_dir, "version.json")
+                    # assert(os.path.isfile(temp_version_file), "version file is not exist")
+
+                    if os.path.isfile(temp_version_file):
+                        vjson = json.loads(open(temp_version_file).read())
+                        game_name = vjson["game_name"]
+                        major = vjson["major"] 
+                        minor = vjson["minor"] 
+                        zip_name = '%s%s' %(tempfile, tempvalue)
+                        version_name = '%s_%s_%s.zip' %(game_name, major, minor)
+                        if zip_name != version_name:
+                            print("-----------version number and zip number is different!!!--------")
+                            print("zip_version :" + zip_name)
+                            print("version.json:" + version_name)
+                            print("----------------------------------------------------------------")
+                            return True
+                    else:
+                        print("===========version.json file is not exist=========")
+                        return True
+
 def add_svn_file():
     hall_script_dir = os.path.join(mypath, "hall\script")
     if os.path.isdir(hall_script_dir):
@@ -120,7 +179,13 @@ def encrypt_files():
 
 def ZipAllLeafFile(Path,tempfile):
     if os.path.isdir(Path):
-        tempvalue = names.get(tempfile, -1)
+        model_name = tempfile
+        # for tmp_skin in skins:
+        #     skin_channel = tmp_skin.replace("skins", "")
+        #     if skin_channel in model_name:
+        #         model_name = model_name.replace(skin_channel, "")
+
+        tempvalue = names.get(model_name, -1)
         if tempvalue != -1:
             FileCtl = zipfile.ZipFile(tempfile + tempvalue, 'w', zipfile.ZIP_DEFLATED)
             os.chdir(Path)
@@ -139,12 +204,34 @@ def generate_zips():
     for tempfile in os.listdir(mypath):
         os.chdir(mypath)
         if os.path.isdir(os.path.join(mypath, tempfile)):
-            ZipAllLeafFile(os.path.join(mypath, tempfile),tempfile)
+            is_skin_dir = False
+            for tmp_skin in skins:
+                if tmp_skin in tempfile:
+                    is_skin_dir = True
+            
+
+            if is_skin_dir:
+                for tmpdir in os.listdir(os.path.join(mypath, tempfile)):
+                    os.chdir(os.path.join(mypath, tempfile))
+                    ZipAllLeafFile(os.path.join(os.path.join(mypath, tempfile), tmpdir),tmpdir)
+            else:
+                ZipAllLeafFile(os.path.join(mypath, tempfile),tempfile)
             
     for tempfile in os.listdir(mypath):
         os.chdir(mypath)
         if os.path.isdir(os.path.join(mypath, tempfile)):
-          shutil.rmtree(os.path.join(mypath, tempfile))
+            is_skin_dir = False
+            for tmp_skin in skins:
+                if tmp_skin in tempfile:
+                    is_skin_dir = True
+
+            if is_skin_dir:
+                for tmpdir in os.listdir(os.path.join(mypath, tempfile)):
+                    os.chdir(os.path.join(mypath, tempfile))
+                    if os.path.isdir(os.path.join(os.path.join(mypath, tempfile), tmpdir)):
+                        shutil.rmtree(os.path.join(os.path.join(mypath, tempfile), tmpdir))
+            else:
+                shutil.rmtree(os.path.join(mypath, tempfile))
 
 def generate_cdn_list():
     filename = mypath +"\cdn_list.lua"
@@ -155,22 +242,25 @@ def generate_cdn_list():
             f.write(cdn_path)
 
 if __name__ == '__main__':
-    os.chdir("C:\Workspace\pub_formal")
+    os.chdir("C:\Workspace\pub_formal")    
     pathSVN = os.path.join(os.getcwd(),"dev")
     svnVerA = svnGetCurVersion(pathSVN)
     svnUp(pathSVN)
     svnVerB = svnGetCurVersion(pathSVN)
-    print(svnVerA, svnVerB)
+    print(svnVerA, svnVerB)    
 
     mypath = os.path.join(os.getcwd(),"pub")
     outpath = os.path.join(os.getcwd(),"out")
     Path = os.getcwd()
-
     copy_res()
+
     is_error = generate_pub()
     if is_error :
         os.system("pause")
-    else:    
+    else:
+        is_error = generate_pub_skin() 
+        if is_error:
+            os.system("pause") 
         add_svn_file()
         encrypt_files()
         generate_zips()
