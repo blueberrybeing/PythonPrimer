@@ -17,40 +17,40 @@ Path = ""
 majorVer = "_19_0.zip"
 
 names = {
-    'hall':'_19_4.zip',
-    'common':'_19_2.zip',
+    'hall':'_19_5.zip',
+    # 'common':'_19_2.zip',
 
     # 'festivity':'_18_4.zip',
     # 'spring_guide':'_19_3.zip',
     # 'spring_festival':'_19_0.zip',
     # 'fools_day':'_19_0.zip',
-    'festivity51':'_19_0.zip',
-    'zhd_bsmz':'_19_0.zip',
+    # 'festivity51':'_19_0.zip',
+    # 'zhd_bsmz':'_19_0.zip',
 
 
     # 'common_jj':'_19_0.zip',
     # 'bcbm':'_19_1.zip',
-    'fkszg':'_18_2.zip',
+    # 'fkszg':'_18_2.zip',
     # 'fruit':'_18_1.zip',
-    'hhmf':'_18_3.zip',
-    'jlbd':'_18_3.zip',
+    # 'hhmf':'_18_3.zip',
+    # 'jlbd':'_18_3.zip',
     # 'phoenix':'_18_2.zip',
     # 'shz':'_19_1.zip',
-    'slwh':'_18_3.zip',
-    'slwh3D':'_18_5.zip',
+    # 'slwh':'_18_3.zip',
+    # 'slwh3D':'_18_5.zip',
     # 'xyzb':'_18_3.zip',
-    'fkzww':'_18_2.zip',
+    # 'fkzww':'_18_2.zip',
 
     # 'common_qp':'_18_3.zip',
-    'fkjh':'_18_4.zip',
+    # 'fkjh':'_18_4.zip',
     # 'brnn':'_18_4.zip',
-    'ddz':'_19_5.zip',
+    # 'ddz':'_19_5.zip',
     # 'xydz':'_18_2.zip',
-    'sgzb':'_18_5.zip',
+    # 'sgzb':'_18_5.zip',
 
-    'common_by':'_19_3.zip',
-    'shby':'_19_4.zip',
-    'fishing':'_19_4.zip', 
+    # 'common_by':'_19_3.zip',
+    # 'shby':'_19_4.zip',
+    # 'fishing':'_19_4.zip', 
     # 'fkby':'_19_0.zip',
 }
 
@@ -125,6 +125,16 @@ def my_copy_tree(src_path, dst_path):
 #生成皮的pub下对应文件夹，且该方法必须在generate_pub后调用
 #以确保主线的更改以拷到pub，方便之后的皮的覆盖
 def generate_pub_skin():
+    #修复换皮这边没有改动但主皮肤有改动时换皮包不能生成问题
+    for valSkin in skins:
+        skinDir = os.path.join(outpath, valSkin)
+        if not os.path.exists(skinDir):
+            os.makedirs(skinDir)
+            main_hall_dir = os.path.join(outpath, "hall")
+            if os.path.exists(main_hall_dir):
+                skin_hall_dir = os.path.join(skinDir, "hall")
+                my_copy_tree(main_hall_dir, skin_hall_dir)
+
     for tmpskin in os.listdir(outpath):
         if tmpskin in skins :
             print("skin_dir:"+tmpskin) 
