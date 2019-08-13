@@ -14,47 +14,53 @@ svnVerB = ""
 mypath = ""
 outpath = ""
 Path = ""
-majorVer = "_19_0.zip"
+majorVer = "_20_0.zip"
 
 names = {
-    'hall':'_19_5.zip',
-    # 'common':'_19_2.zip',
+    'hall':'_20_2.zip',
+    # 'common':'_20_1.zip',
+    # 'platform_default':'_20_1.zip',
 
-    # 'festivity':'_18_4.zip',
-    # 'spring_guide':'_19_3.zip',
+    # 'festivity':'_18_5.zip',
+    # 'spring_guide':'_19_4.zip',
+    # 'summer_guide':'_20_3.zip',
     # 'spring_festival':'_19_0.zip',
     # 'fools_day':'_19_0.zip',
-    # 'festivity51':'_19_0.zip',
-    # 'zhd_bsmz':'_19_0.zip',
+    # 'festivity51':'_19_1.zip',
+    # 'festivity55':'_19_2.zip',
+    # 'zhd_bsmz':'_19_1.zip',
 
 
-    # 'common_jj':'_19_0.zip',
-    # 'bcbm':'_19_1.zip',
-    # 'fkszg':'_18_2.zip',
-    # 'fruit':'_18_1.zip',
-    # 'hhmf':'_18_3.zip',
-    # 'jlbd':'_18_3.zip',
-    # 'phoenix':'_18_2.zip',
-    # 'shz':'_19_1.zip',
-    # 'slwh':'_18_3.zip',
-    # 'slwh3D':'_18_5.zip',
-    # 'xyzb':'_18_3.zip',
-    # 'fkzww':'_18_2.zip',
+    'common_jj':'_19_3.zip',
+    'bcbm':'_19_3.zip',
+    # 'fkszg':'_18_4.zip',
+    'fruit':'_18_3.zip',
+    # 'hhmf':'_18_4.zip',
+    # 'jlbd':'_18_4.zip', 
+    # 'phoenix':'_18_3.zip',
+    # 'shz':'_19_3.zip',
+    # 'slwh':'_18_4.zip',
+    'slwh3D':'_18_7.zip',
+    # 'xyzb':'_18_4.zip',
+    # 'fkzww':'_18_3.zip',
 
-    # 'common_qp':'_18_3.zip',
-    # 'fkjh':'_18_4.zip',
-    # 'brnn':'_18_4.zip',
-    # 'ddz':'_19_5.zip',
-    # 'xydz':'_18_2.zip',
-    # 'sgzb':'_18_5.zip',
+    'common_qp':'_18_5.zip',
+    'fkjh':'_18_6.zip',
+    'brnn':'_18_6.zip',
+    'ddz':'_19_8.zip',
+    # 'xydz':'_18_3.zip',
+    # 'sgzb':'_18_6.zip',
+    # 'fkmj':'_19_0.zip',
 
-    # 'common_by':'_19_3.zip',
-    # 'shby':'_19_4.zip',
-    # 'fishing':'_19_4.zip', 
-    # 'fkby':'_19_0.zip',
+    # 'common_by':'_20_1.zip',
+    # 'shby':'_20_2.zip',
+    # 'fishing':'_20_2.zip', 
+    'fkby':'_20_2.zip', 
 }
 
-skins = ["skins_12489"]
+skins = ["skins_12489", "skins_10001"]
+# skins = ["skins_12489"]
+# skins = ["skins_10001"]
 
 def svnGetCurVersion(path):
   return pysvn.Client().info(path).commit_revision.number
@@ -82,7 +88,7 @@ def generate_pub():
             temp_child_dir = os.path.join(mypath, tempfile)
             print(os.path.join(outpath, tempfile),temp_child_dir)
             
-            if tempvalue == majorVer:
+            if tempvalue == majorVer or tempvalue == "_19_0.zip":
                 shutil.copytree(os.path.join(pathSVN, tempfile),temp_child_dir)
             else:
                 shutil.copytree(os.path.join(outpath, tempfile),temp_child_dir)
@@ -183,7 +189,9 @@ def encrypt_files():
     if os.path.isdir(Path):
         bat = os.path.join(Path,'encrypt_game.bat');
     if os.path.isfile(bat):
+        print(mypath)
         for tempfile in os.listdir(mypath):
+            print(tempfile)
             if os.path.isdir(os.path.join(mypath,tempfile)):
                 os.system(bat+" "+tempfile);
 
