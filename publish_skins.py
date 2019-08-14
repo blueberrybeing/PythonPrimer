@@ -279,8 +279,12 @@ if __name__ == '__main__':
         is_error = generate_pub_skin() 
         if is_error:
             os.system("pause") 
-        add_svn_file()
-        encrypt_files()
-        generate_zips()
-        print "success"
-        os.system("pause")
+        if os.path.exists(mypath):        
+            add_svn_file()
+            encrypt_files()
+            generate_zips()
+            print "success"
+            os.system("pause")
+        else:
+            print("no [pub] dir!!!")
+
