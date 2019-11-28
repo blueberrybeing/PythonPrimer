@@ -14,53 +14,63 @@ svnVerB = ""
 mypath = ""
 outpath = ""
 Path = ""
-majorVer = "_20_0.zip"
+majorVer = "_21_0.zip"
 
 names = {
-    'hall':'_20_2.zip',
-    # 'common':'_20_1.zip',
-    # 'platform_default':'_20_1.zip',
+    'hall':'_21_2.zip',
+    'common':'_21_2.zip',
+    'platform_default':'_21_2.zip',
 
-    # 'festivity':'_18_5.zip',
-    # 'spring_guide':'_19_4.zip',
-    # 'summer_guide':'_20_3.zip',
-    # 'spring_festival':'_19_0.zip',
-    # 'fools_day':'_19_0.zip',
-    # 'festivity51':'_19_1.zip',
-    # 'festivity55':'_19_2.zip',
-    # 'zhd_bsmz':'_19_1.zip',
+    # # 'festivity':'_18_5.zip',
+    # 'spring_guide':'_19_5.zip',
+    # 'summer_guide':'_20_7.zip',
+    # 'spring_festival':'_19_1.zip',
+    # 'fools_day':'_19_1.zip',
+    # 'festivity55':'_20_5.zip',
+    # # 'zhd_bsmz':'_19_1.zip',
+    # 'zhd_jfjs':'_20_2.zip',
 
 
-    'common_jj':'_19_3.zip',
-    'bcbm':'_19_3.zip',
-    # 'fkszg':'_18_4.zip',
-    'fruit':'_18_3.zip',
-    # 'hhmf':'_18_4.zip',
-    # 'jlbd':'_18_4.zip', 
-    # 'phoenix':'_18_3.zip',
-    # 'shz':'_19_3.zip',
-    # 'slwh':'_18_4.zip',
-    'slwh3D':'_18_7.zip',
-    # 'xyzb':'_18_4.zip',
-    # 'fkzww':'_18_3.zip',
+    # 'common_jj':'_19_4.zip',
+    # 'bcbm':'_19_5.zip',
+    # 'fkszg':'_18_5.zip',
+    # 'fruit':'_18_4.zip',
+    # # 'hhmf':'_18_4.zipn,
+    # 'jlbd':'_18_5.zip', 
+    # # 'phoenix':'_18_3.zip',
+    # 'shz':'_19_5.zip',
+    # # 'slwh':'_18_4.zip',
+    # 'slwh3D':'_18_8.zip',
+    # 'xyzb':'_18_6.zip',
+    # 'fkzww':'_18_4.zip',
+    'xxl':'_21_1.zip',
+    'shbz':'_21_1.zip',
 
-    'common_qp':'_18_5.zip',
-    'fkjh':'_18_6.zip',
-    'brnn':'_18_6.zip',
-    'ddz':'_19_8.zip',
-    # 'xydz':'_18_3.zip',
-    # 'sgzb':'_18_6.zip',
-    # 'fkmj':'_19_0.zip',
+    # 'common_qp':'_18_7.zip',
+    # 'fkjh':'_18_9.zip',
+    # 'brnn':'_18_7.zip',
+    # 'ddz':'_19_10.zip',
+    # 'xydz':'_18_4.zip',
+    # 'sgzb':'_18_8.zip',
+    # 'fkmj':'_19_3.zip',
 
-    # 'common_by':'_20_1.zip',
-    # 'shby':'_20_2.zip',
-    # 'fishing':'_20_2.zip', 
-    'fkby':'_20_2.zip', 
+    'common_by':'_21_1.zip',
+    # 'shby':'_20_4.zip',
+    # 'fishing':'_20_5.zip', 
+    # # 'fkby':'_20_5.zip', 
+    # # 'classic':'_5_3.zip', 
+    # # 'djs':'_5_3.zip', 
+    # # 'lwmj':'_6_0.zip', 
+    # # 'monkey':'_5_3.zip', 
+    # # 'public':'_5_3.zip', 
+    # # 'public_fkby_scene':'_1_1.zip', 
+    # # 'sgdk':'_5_1.zip', 
 }
 
-skins = ["skins_12489", "skins_10001"]
+skins = ["skins_12489", "skins_10001","skins_10002","skins_10003","skins_10004","skins_10005"]
 # skins = ["skins_12489"]
 # skins = ["skins_10001"]
+# skins = ["skins_10002"]
 
 def svnGetCurVersion(path):
   return pysvn.Client().info(path).commit_revision.number
@@ -128,6 +138,34 @@ def my_copy_tree(src_path, dst_path):
     else:
         print(src_path+" is not exist!")
 
+# 换皮这边没有改动的情况下拷贝加入有效性检测
+# 有效性检测规则：1、不允许皮肤分支有自己的独立素材时被主皮肤同名覆盖（因为这个会导致杂揉）
+#                    出现这种情况以错误级别处理
+#                 2、新增资源，以警告级别提示（需要确认能否使用）
+def skin_dir_copy_tree_with_check(src_path, dst_path, skin_dir):
+    if not os.path.exists(dst_path):
+        os.makedirs(dst_path)
+
+    if os.path.exists(src_path):        
+        for node_name in os.listdir(src_path):
+            full_path = os.path.join(src_path, node_name)
+            full_dev_skin_path = os.path.join(skin_dir, node_name)
+            if os.path.isfile(full_path):
+                if os.path.exists(full_dev_skin_path):
+                    # print("")
+                    print("XX ERROR XX :skin own this file("+full_dev_skin_path+"),but replace by main")
+                    # shutil.copy(full_path, os.path.join(dst_path, node_name))
+                else:
+                    findPos = full_path.find("\\res\\")
+                    # if findPos != -1:
+                        # print("!!! WARN !!!:skin no this file("+full_path+"), is main new add file!")
+                    shutil.copy(full_path, os.path.join(dst_path, node_name))
+            else:
+                skin_dir_copy_tree_with_check(full_path, os.path.join(dst_path, node_name), os.path.join(skin_dir, node_name))
+    else:
+        print(src_path+" is not exist!")
+
+
 #生成皮的pub下对应文件夹，且该方法必须在generate_pub后调用
 #以确保主线的更改以拷到pub，方便之后的皮的覆盖
 def generate_pub_skin():
@@ -139,24 +177,31 @@ def generate_pub_skin():
             main_hall_dir = os.path.join(outpath, "hall")
             if os.path.exists(main_hall_dir):
                 skin_hall_dir = os.path.join(skinDir, "hall")
-                my_copy_tree(main_hall_dir, skin_hall_dir)
+                #my_copy_tree(main_hall_dir, skin_hall_dir)
+                skin_dev_dir = os.path.join(pathSVN, valSkin)
+                skin_dev_dir = os.path.join(skin_dev_dir, "hall")
+                skin_dir_copy_tree_with_check(main_hall_dir, skin_hall_dir, skin_dev_dir)
 
+    # os.system("pause")
     for tmpskin in os.listdir(outpath):
         if tmpskin in skins :
-            print("skin_dir:"+tmpskin) 
+            print("skin_dir:" + tmpskin) 
+            skin_dev_dir = os.path.join(pathSVN, tmpskin)
+            skin_dev_dir = os.path.join(skin_dev_dir, "hall")
+
             for tempfile in os.listdir(os.path.join(outpath,tmpskin)):
                 tempvalue = names.get(tempfile, -1)
                 if tempvalue != -1:
                     skin_channel = tmpskin.replace("skins", "")
                     temp_main_child_dir = os.path.join(mypath, tempfile)
                     temp_child_dir = os.path.join(os.path.join(mypath, tmpskin), tempfile)#os.path.join(mypath, tempfile+skin_channel)
-                    my_copy_tree(temp_main_child_dir, temp_child_dir)
+                    skin_dir_copy_tree_with_check(temp_main_child_dir, temp_child_dir, skin_dev_dir)
                     print(os.path.join(outpath, tempfile),temp_child_dir)
                     
                     if tempvalue == majorVer:
-                        my_copy_tree(os.path.join(os.path.join(pathSVN, tmpskin),tempfile),temp_child_dir)
+                        my_copy_tree(os.path.join(os.path.join(pathSVN, tmpskin),tempfile), temp_child_dir)
                     else:
-                        my_copy_tree(os.path.join(os.path.join(outpath, tmpskin),tempfile),temp_child_dir)
+                        my_copy_tree(os.path.join(os.path.join(outpath, tmpskin),tempfile), temp_child_dir)
 
                     temp_version_file = os.path.join(temp_child_dir, "version.json")
                     # assert(os.path.isfile(temp_version_file), "version file is not exist")
@@ -176,7 +221,7 @@ def generate_pub_skin():
                             return True
                     else:
                         print("===========version.json file is not exist=========")
-                        return True
+                        # return True
 
 def add_svn_file():
     hall_script_dir = os.path.join(mypath, "hall\script")
