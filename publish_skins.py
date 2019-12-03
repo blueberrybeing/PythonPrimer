@@ -26,9 +26,9 @@ names = {
     # 'summer_guide':'_20_7.zip',
     # 'spring_festival':'_19_1.zip',
     # 'fools_day':'_19_1.zip',
-    # 'festivity55':'_20_5.zip',
+    'festivity55':'_20_6.zip',
     # # 'zhd_bsmz':'_19_1.zip',
-    # 'zhd_jfjs':'_20_2.zip',
+    'zhd_jfjs':'_20_3.zip',
 
 
     # 'common_jj':'_19_4.zip',
@@ -47,9 +47,9 @@ names = {
     'shbz':'_21_1.zip',
 
     # 'common_qp':'_18_7.zip',
-    # 'fkjh':'_18_9.zip',
+    'fkjh':'_18_10.zip',
     # 'brnn':'_18_7.zip',
-    # 'ddz':'_19_10.zip',
+    'ddz':'_19_11.zip',
     # 'xydz':'_18_4.zip',
     # 'sgzb':'_18_8.zip',
     # 'fkmj':'_19_3.zip',
@@ -64,7 +64,7 @@ names = {
     # # 'monkey':'_5_3.zip', 
     # # 'public':'_5_3.zip', 
     # # 'public_fkby_scene':'_1_1.zip', 
-    # # 'sgdk':'_5_1.zip', 
+    # # 'sgdk':'_5_1.zip',
 }
 
 skins = ["skins_12489", "skins_10001","skins_10002","skins_10003","skins_10004","skins_10005"]
