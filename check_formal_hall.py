@@ -105,7 +105,7 @@ def check_apiConfig():
 
 def check_seed_line(line):
     seed_list = ['debug', 'binary_debug', 'network_dump', 'active', 'crash_pop']        
-    c2 = re.compile("r.*false")
+    c2 = re.compile(r".*false")
     for seed in seed_list:
         c = re.compile(r"^seed\.%s"%seed)
         if c.search(line) != None:

@@ -18,65 +18,63 @@ outpath = ""
 Path = ""
 
 names = {
-    'hall':'_22_6.zip',
-    # 'common':'_22_1.zip',
-    # 'platform_default':'_22_1.zip',
+    # 'hall'              :'_24_2.zip',
+    # 'common'            :'_24_1.zip',
+    # 'platform_default'  :'_24_1.zip',
 
-    # # # 'festivity':'_18_5.zip',
-    # 'spring_guide':'_19_6.zip',
-    # 'summer_guide':'_20_8.zip',
-    # 'spring_festival':'_19_2.zip',
-    # 'fools_day':'_19_2.zip',
-    # 'festivity55':'_21_0.zip',
-    # # # 'zhd_bsmz':'_19_1.zip',
-    # # # 'zhd_jfjs':'_20_3.zip',
-    # 'guide':'_22_2.zip',
-    # # 'common_by_game':'_1_0.zip',
-    # 'common_by_spirit':'_1_1.zip',
+    # 'festivity55'       :'_21_9.zip',
+    # # 'zhd_bsmz'          :'_19_1.zip',
+    # # 'zhd_jfjs'          :'_20_4.zip',
+    # 'guide'             :'_24_1.zip',
+    # 'card'              :'_24_1.zip',
+    # 'activityNewUser'   :'_24_0.zip',
 
+    # 'common_jj'         :'_19_8.zip',
+    # 'fkzww'             :'_18_8.zip',
+    # 'xxl'               :'_21_9.zip',
+    # # 'shbz'              :'_21_9.zip',
+    # 'jzsc'              :'_22_3.zip',
 
-    # 'common_jj':'_19_6.zip',
-    # # 'bcbm':'_19_6.zip',
-    # # 'fkszg':'_18_6.zip',
-    # # 'fruit':'_18_5.zip',
-    # # 'hhmf':'_18_5.zip',
-    # # 'jlbd':'_18_6.zip', 
-    # # 'phoenix':'_18_4.zip',
-    # # 'shz':'_19_6.zip',
-    # # 'slwh':'_18_5.zip',
-    # # 'slwh3D':'_18_9.zip',
-    # # 'xyzb':'_18_7.zip',
-    # # 'fkzww':'_18_5.zip',
-    'xxl':'_21_5.zip',
-    'shbz':'_21_5.zip',
-    # 'jzsc':'_22_1.zip',
+    # 'common_qp'         :'_18_12.zip',
+    # 'fkjh'              :'_18_15.zip',
+    # 'ddz'               :'_24_1.zip',
+    # # 'sgzb'              :'_18_12.zip',
+    # 'fkmj'              :'_19_10.zip',
 
-    # # 'common_qp':'_18_8.zip',
-    # # 'fkjh':'_18_11.zip',
-    # 'brnn':'_18_9.zip',
-    'ddz':'_19_14.zip',
-    # 'xydz':'_18_6.zip',
-    # 'sgzb':'_18_10.zip',
-    # 'fkmj':'_19_6.zip',
+    # 'paths'             :'_2_0.zip',
+    # 'xfish'             :'_24_2.zip',
+    # 'xmxxl'             :'_24_1.zip',
+    # 'hwby'              :'_24_0.zip',
 
-    # 'common_by':'_22_0.zip',
-    # 'shby':'_21_0.zip',
-    # 'fishing':'_21_1.zip', 
-    # 'fkby':'_21_0.zip', 
-    # 'classic':'_5_4.zip', 
-    # 'djs':'_5_4.zip', 
-    # 'lwmj':'_6_1.zip', 
-    # 'monkey':'_5_4.zip', 
-    # 'public':'_6_0.zip', 
-    # 'public_fkby_scene':'_1_2.zip', 
-    # 'sgdk':'_5_2.zip',
+    # 'common_by'         :'_25_0.zip',
+    # 'shby'              :'_23_0.zip',
+    # 'fishing'           :'_22_0.zip',
+    # # 'common_by_spirit'  :'_1_3.zip',
+    # 'common_by_game'    :'_3_0.zip',
+    'fkby'              :'_23_0.zip',
+    'classic'           :'_7_0.zip',
+    'djs'               :'_6_0.zip',
+    'lwmj'              :'_7_0.zip',
+    'monkey'            :'_6_0.zip',
+    'public'            :'_7_0.zip',
+    'public_fkby_scene' :'_2_0.zip',
+    'sgdk'              :'_5_7.zip',
+    'bxgh'              :'_2_0.zip',
+    'res_bxgh'          :'_1_0.zip',
+    'res_chaoji'        :'_1_0.zip',
+    'res_fuhao'         :'_1_0.zip',
+    'res_longwangmijing':'_1_0.zip',
+    'res_monkeyking'    :'_1_0.zip',
+    'res_xinshou'       :'_1_0.zip',
+    'res_zhizun'        :'_1_0.zip',
+
 }
 
 skins = ["skins_12489", "skins_10001","skins_10002","skins_10003","skins_10004","skins_10005"]
 # skins = ["skins_10002"]
 # skins = ["skins_10003"]
 # skins = ["skins_10005"]
-
+# skins=[]
 def svnGetCurVersion(path):
   return pysvn.Client().info(path).commit_revision.number
 
@@ -127,6 +125,47 @@ def generate_pub():
             temp_version_file = os.path.join(temp_child_dir, "version.json")
             # assert(os.path.isfile(temp_version_file), "version file is not exist")
 
+            if os.path.isfile(temp_version_file):
+                vjson = json.loads(open(temp_version_file).read())
+                game_name = vjson["game_name"]
+                major = vjson["major"] 
+                minor = vjson["minor"] 
+                zip_name = '%s%s' %(tempfile, tempvalue)
+                version_name = '%s_%s_%s.zip' %(game_name, major, minor)
+                if zip_name != version_name:
+                    print("-----------version number and zip number is different!!!--------")
+                    print("zip_version :" + zip_name)
+                    print("version.json:" + version_name)
+                    print("----------------------------------------------------------------")
+                    return True
+            else:
+                print("===========version.json file is not exist=========")
+                return True
+
+def rm_fkby_sub_modules():
+    fkby_path = os.path.join(mypath, "fkby")
+    if not os.path.exists(fkby_path):
+        return 
+    for tempfile in os.listdir(fkby_path):
+        if os.path.isdir(os.path.join(fkby_path, tempfile)) and tempfile != "res" and tempfile != "script":
+            shutil.rmtree(os.path.join(fkby_path, tempfile))
+
+def generate_pub_fkby_sub_modules():
+    outpath_fkby = os.path.join(outpath,"fkby")
+    src_dir_fkby = os.path.join(pathSVN,"fkby")
+
+    for tempfile in os.listdir(outpath_fkby):
+        tempvalue = names.get(tempfile, -1)
+        if tempvalue != -1:
+            temp_child_dir = os.path.join(mypath, tempfile)
+            print("copy files to pub:" + temp_child_dir)
+            
+            if is_major_ver(tempvalue):
+                shutil.copytree(os.path.join(src_dir_fkby, tempfile),temp_child_dir)
+            else:
+                shutil.copytree(os.path.join(outpath_fkby, tempfile),temp_child_dir)
+
+            temp_version_file = os.path.join(temp_child_dir, "version.json")
             if os.path.isfile(temp_version_file):
                 vjson = json.loads(open(temp_version_file).read())
                 game_name = vjson["game_name"]
@@ -335,10 +374,10 @@ def generate_cdn_list():
 if __name__ == '__main__':
     os.chdir("C:\Workspace\pub_formal")    
     pathSVN = os.path.join(os.getcwd(),"dev")
-    svnVerA = svnGetCurVersion(pathSVN)
-    svnUp(pathSVN)
-    svnVerB = svnGetCurVersion(pathSVN)
-    print(svnVerA, svnVerB)    
+    # svnVerA = svnGetCurVersion(pathSVN)
+    # svnUp(pathSVN)
+    # svnVerB = svnGetCurVersion(pathSVN)
+    # print(svnVerA, svnVerB)    
 
     mypath = os.path.join(os.getcwd(),"pub")
     outpath = os.path.join(os.getcwd(),"out")
@@ -346,7 +385,10 @@ if __name__ == '__main__':
     copy_res()
 
     is_error = generate_pub()
-    if is_error :
+    rm_fkby_sub_modules()
+    is_error_fkby_sub = generate_pub_fkby_sub_modules()
+    
+    if is_error or is_error_fkby_sub :
         os.system("pause")
     else:
         is_error = generate_pub_skin() 

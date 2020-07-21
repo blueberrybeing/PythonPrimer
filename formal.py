@@ -6,61 +6,62 @@ import os
 import requests
 import check_formal_hall
 
+# skins = ["hall_23_0.zip","platform_default_23_0.zip"]
+skins = ["hall_24_2.zip"]
+# skins = ["platform_default_23_0.zip"]
 names = {
-    'hall':'_21_0.zip',
-    'common':'_21_2.zip',
-    'platform_default':'_21_2.zip',
+    'hall'              :'_24_2.zip',
+    'common'            :'_24_1.zip',
+    'platform_default'  :'_24_1.zip',
 
-    # # 'festivity':'_18_5.zip',
-    # 'spring_guide':'_19_5.zip',
-    # 'summer_guide':'_20_7.zip',
-    # 'spring_festival':'_19_1.zip',
-    # 'fools_day':'_19_1.zip',
-    'festivity55':'_20_6.zip',
-    # # 'zhd_bsmz':'_19_1.zip',
-    'zhd_jfjs':'_20_3.zip',
+    'festivity55'       :'_21_9.zip',
+    # 'zhd_bsmz'          :'_19_1.zip',
+    # 'zhd_jfjs'          :'_20_4.zip',
+    'guide'             :'_24_1.zip',
+    'card'              :'_24_1.zip',
+    'activityNewUser'   :'_24_0.zip',
 
+    'common_jj'         :'_19_8.zip',
+    'fkzww'             :'_18_8.zip',
+    'xxl'               :'_21_9.zip',
+    # 'shbz'              :'_21_9.zip',
+    'jzsc'              :'_22_3.zip',
 
-    # 'common_jj':'_19_4.zip',
-    # 'bcbm':'_19_5.zip',
-    # 'fkszg':'_18_5.zip',
-    # 'fruit':'_18_4.zip',
-    # # 'hhmf':'_18_4.zipn,
-    # 'jlbd':'_18_5.zip', 
-    # # 'phoenix':'_18_3.zip',
-    # 'shz':'_19_5.zip',
-    # # 'slwh':'_18_4.zip',
-    # 'slwh3D':'_18_8.zip',
-    # 'xyzb':'_18_6.zip',
-    # 'fkzww':'_18_4.zip',
-    'xxl':'_21_1.zip',
-    'shbz':'_21_1.zip',
+    'common_qp'         :'_18_12.zip',
+    'fkjh'              :'_18_15.zip',
+    'ddz'               :'_24_1.zip',
+    # 'sgzb'              :'_18_12.zip',
+    'fkmj'              :'_19_10.zip',
 
-    # 'common_qp':'_18_7.zip',
-    'fkjh':'_18_10.zip',
-    # 'brnn':'_18_7.zip',
-    'ddz':'_19_11.zip',
-    # 'xydz':'_18_4.zip',
-    # 'sgzb':'_18_8.zip',
-    # 'fkmj':'_19_3.zip',
+    'paths'             :'_2_0.zip',
+    'xfish'             :'_24_2.zip',
+    'xmxxl'             :'_24_1.zip',
+    # 'hwby'              :'_24_0.zip',
 
-    'common_by':'_21_1.zip',
-    # 'shby':'_20_4.zip',
-    # 'fishing':'_20_5.zip', 
-    # # 'fkby':'_20_5.zip', 
-    # # 'classic':'_5_3.zip', 
-    # # 'djs':'_5_3.zip', 
-    # # 'lwmj':'_6_0.zip', 
-    # # 'monkey':'_5_3.zip', 
-    # # 'public':'_5_3.zip', 
-    # # 'public_fkby_scene':'_1_1.zip', 
-    # # 'sgdk':'_5_1.zip',
-
+    'common_by'         :'_25_0.zip',
+    'shby'              :'_23_0.zip',
+    'fishing'           :'_22_0.zip',
+    # 'common_by_spirit'  :'_1_3.zip',
+    'common_by_game'    :'_3_0.zip',
+    'fkby'              :'_23_0.zip',
+    'classic'           :'_7_0.zip',
+    'djs'               :'_6_0.zip',
+    'lwmj'              :'_7_0.zip',
+    'monkey'            :'_6_0.zip',
+    'public'            :'_7_0.zip',
+    'public_fkby_scene' :'_2_0.zip',
+    'sgdk'              :'_5_7.zip',
+    'bxgh'              :'_2_0.zip',
+    'res_bxgh'          :'_1_0.zip',
+    'res_chaoji'        :'_1_0.zip',
+    'res_fuhao'         :'_1_0.zip',
+    'res_longwangmijing':'_1_0.zip',
+    'res_monkeyking'    :'_1_0.zip',
+    'res_xinshou'       :'_1_0.zip',
+    'res_zhizun'        :'_1_0.zip',
 }
 
-skins = [
-    "hall_21_2.zip",
-]
+
 
 skin_folders = ["skins_12489", "skins_10001","skins_10002","skins_10003","skins_10004","skins_10005" ]
 
